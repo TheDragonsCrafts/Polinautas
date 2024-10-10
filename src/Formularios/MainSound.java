@@ -33,7 +33,7 @@ public class MainSound {
     public int volumen = 50; 
     private Thread playThread;
     public boolean isPlaying;
-    /*
+    
     public void setfile(String file){
         try {
             // Obtener la URL del archivo de audio en los recursos
@@ -41,17 +41,6 @@ public class MainSound {
             if (audioStream == null) {
                 throw new IllegalArgumentException("Archivo de audio no encontrado: " + file);
             }
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioStream);
-
-            // Obtener el formato del audio
-            AudioFormat format = audioInputStream.getFormat();
-            
-            if (format.getSampleSizeInBits() != 16 || format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED) {
-                System.out.println("El formato no es compatible. Convertir a PCM 16 bits.");
-                AudioFormat newFormat = new AudioFormat(44100, 16, 2, true, false);
-                audioInputStream = AudioSystem.getAudioInputStream(newFormat, audioInputStream);
-            }
-
             // Abrir el flujo de audio
             AudioInputStream aIS = AudioSystem.getAudioInputStream(audioStream);
 
@@ -68,7 +57,7 @@ public class MainSound {
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
-    }*/
+    }
     /*
     public void play(File file){
         //clip.start();
@@ -109,7 +98,7 @@ public class MainSound {
                 }
                 fc.setValue(volumen);
                 System.out.println("Volumen ajustado a: " + volumen);
-            }*/   
+            }  
             volumen =(int) vol*100;
             if (fc != null) {
                 float min = fc.getMinimum();
@@ -118,8 +107,15 @@ public class MainSound {
                 fc.setValue(dB);
                 System.out.println(dB); 
                 System.out.println(fc.getValue());
+            }*/
+            if((vol*100)>0){
+                player.stop();
+                System.out.println("mute");
+            }else{
+                player.play();
+                System.out.println("volumen ajustado");
             }
-            System.out.println("Volumen ajustado a: " + (vol*100)+"%");
+            //System.out.println("Volumen ajustado a: " + (vol*100)+"%");
             
         }catch(Exception e){
             System.out.println("Error al cambiar volumen");
@@ -131,9 +127,9 @@ public class MainSound {
         switch (id){
             case 1:
                 System.out.println("cancion 1");
-                //String file="/Audios/Menu_Principal-Soundtrack.mp3";
-                //setfile(file);
-                reproducir_mp3("src/Audios/Menu_Principal-Soundtrack.mp3");
+                String file="/Audios/Menu Principal-Soundtrack.wav";
+                setfile(file);
+                //reproducir_mp3("src/Audios/Menu_Principal-Soundtrack.mp3");
                 break;
             case 2:
                 System.out.println("cancion 2");
@@ -165,9 +161,6 @@ public class MainSound {
                             InputStream inputStream = new FileInputStream(file);
                             player = new AdvancedPlayer(inputStream);
                             player.play();
-                            line=(SourceDataLine) player;
-                            fc=(FloatControl) line.getControl(FloatControl.Type.MASTER_GAIN);
-                            fc.setValue(volumen);
                         }
                     } catch (Exception e) {
                         System.out.println("Error al reproducir el archivo MP3: " + e.getMessage());

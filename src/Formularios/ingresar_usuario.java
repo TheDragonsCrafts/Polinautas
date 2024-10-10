@@ -6,6 +6,7 @@ package Formularios;
 
 import java.awt.Point;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,6 +17,7 @@ public class ingresar_usuario extends javax.swing.JFrame {
     /**
      * Creates new form ingresar_usuario
      */
+    Conexion_base_de_datos cDB=new Conexion_base_de_datos();
     private Point point;
     int retrocesoamenu = 0;
     Boolean Maximized = false;
@@ -26,6 +28,7 @@ public class ingresar_usuario extends javax.swing.JFrame {
         setTitle("Prueba del Conocimiento");
         setLocationRelativeTo(null);
         setResizable(false);
+        menu();
     }
 
     /**
@@ -41,7 +44,17 @@ public class ingresar_usuario extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnCon = new javax.swing.JButton();
+        btnIS = new javax.swing.JButton();
+        btnReg = new javax.swing.JButton();
+        txt1 = new javax.swing.JLabel();
+        btnCon1 = new javax.swing.JButton();
+        etxtname = new javax.swing.JTextField();
+        etxtemail = new javax.swing.JTextField();
+        etxtPass = new javax.swing.JPasswordField();
+        txtname = new javax.swing.JLabel();
+        txtemail = new javax.swing.JLabel();
+        txtPass = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,30 +139,110 @@ public class ingresar_usuario extends javax.swing.JFrame {
                 .addGap(7, 7, 7))
         );
 
-        jButton4.setText("jButton4");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnCon.setText("Iniciar Sesión");
+        btnCon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnConActionPerformed(evt);
             }
         });
+
+        btnIS.setText("Iniciar Sesión");
+        btnIS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnISActionPerformed(evt);
+            }
+        });
+
+        btnReg.setText("Registrarse");
+        btnReg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegActionPerformed(evt);
+            }
+        });
+
+        txt1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txt1.setText("Inicie sesión para poder jugar");
+
+        btnCon1.setText("Iniciar Sesión");
+        btnCon1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCon1ActionPerformed(evt);
+            }
+        });
+
+        txtname.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtname.setText("Ingrese su nombre:");
+
+        txtemail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtemail.setText("Ingrese su correo electronico:");
+
+        txtPass.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtPass.setText("Ingrese su contraseña:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnReg, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCon))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCon1)
+                    .addComponent(btnIS))
+                .addGap(47, 47, 47))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtname)
+                .addGap(167, 167, 167))
             .addGroup(layout.createSequentialGroup()
-                .addGap(187, 187, 187)
-                .addComponent(jButton4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(108, 108, 108)
+                        .addComponent(txt1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(131, 131, 131)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(etxtemail, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(etxtname, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                                .addComponent(etxtPass)
+                                .addComponent(txtemail))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(txtPass)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 322, Short.MAX_VALUE)
-                .addComponent(jButton4)
-                .addGap(48, 48, 48))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtname)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(etxtname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(etxtemail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(etxtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnReg)
+                    .addComponent(btnIS))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCon1)
+                    .addComponent(btnCon))
+                .addGap(23, 23, 23))
         );
 
         pack();
@@ -198,13 +291,82 @@ public class ingresar_usuario extends javax.swing.JFrame {
         getComponentAt(point);
     }//GEN-LAST:event_jPanel1MousePressed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnConActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConActionPerformed
         // TODO add your handling code here:
-        MainPage s=new MainPage();
-        s.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_jButton4ActionPerformed
+        String name=etxtname.getText(), email=etxtemail.getText(), password=new String(etxtPass.getPassword()), id="";
+        //if(cDB.buscar_usuario(name, email, password, id)){
+            MainPage s=new MainPage();
+            s.setVisible(true);
+            dispose();
+        //}else{
+            //JOptionPane.showMessageDialog(rootPane, "ingrese los datos faltantes");
+        //}
+    }//GEN-LAST:event_btnConActionPerformed
 
+    private void btnCon1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCon1ActionPerformed
+        // TODO add your handling code here:
+        String name=etxtname.getText(), email=etxtemail.getText(), password=new String(etxtPass.getPassword()), id="";
+        //if(cDB.buscar_usuario(name, email, password, id)){
+            MainPage s=new MainPage();
+            s.setVisible(true);
+            dispose();
+        //}else{
+            //JOptionPane.showMessageDialog(rootPane, "ingrese los datos faltantes");
+        //}
+    }//GEN-LAST:event_btnCon1ActionPerformed
+
+    private void btnISActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnISActionPerformed
+        // TODO add your handling code here:
+        inicio_sesion();
+    }//GEN-LAST:event_btnISActionPerformed
+
+    private void btnRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegActionPerformed
+        // TODO add your handling code here:
+        registrar();
+    }//GEN-LAST:event_btnRegActionPerformed
+
+    public void menu(){
+        btnIS.setVisible(true);
+        btnReg.setVisible(true);
+        btnCon.setVisible(false);
+        btnCon1.setVisible(false);
+        txt1.setVisible(true);
+        etxtemail.setVisible(false);
+        etxtname.setVisible(false);
+        etxtPass.setVisible(false);
+        txtname.setVisible(false);
+        txtemail.setVisible(false);
+        txtPass.setVisible(false);
+    }
+    public void inicio_sesion(){
+        btnIS.setVisible(false);
+        btnReg.setVisible(false);
+        btnCon.setVisible(false);
+        btnCon1.setVisible(true);
+        txt1.setVisible(false);
+        etxtemail.setVisible(true);
+        etxtname.setVisible(true);
+        etxtPass.setVisible(true);
+        txtname.setVisible(true);
+        txtemail.setVisible(true);
+        txtPass.setVisible(true);
+    }
+    public void registrar(){
+        btnIS.setVisible(false);
+        btnReg.setVisible(false);
+        btnCon.setVisible(true);
+        btnCon1.setVisible(false);
+        txt1.setVisible(false);
+        etxtemail.setVisible(true);
+        etxtname.setVisible(true);
+        etxtPass.setVisible(true);
+        txtname.setVisible(true);
+        txtemail.setVisible(true);
+        txtPass.setVisible(true);
+        txtname.setText("Ingrese un nombre:");
+        txtemail.setText("Ingrese un correo electronico:");
+        txtPass.setText("crea una contraseña:");
+    }
     /**
      * @param args the command line arguments
      */
@@ -241,10 +403,20 @@ public class ingresar_usuario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCon;
+    private javax.swing.JButton btnCon1;
+    private javax.swing.JButton btnIS;
+    private javax.swing.JButton btnReg;
+    private javax.swing.JPasswordField etxtPass;
+    private javax.swing.JTextField etxtemail;
+    private javax.swing.JTextField etxtname;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel txt1;
+    private javax.swing.JLabel txtPass;
+    private javax.swing.JLabel txtemail;
+    private javax.swing.JLabel txtname;
     // End of variables declaration//GEN-END:variables
 }
