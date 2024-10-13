@@ -1,14 +1,7 @@
 package Formularios;
 
-import java.applet.AudioClip;
 import java.awt.Point;
-import java.io.File;
-import java.net.URL;
-import javax.sound.sampled.FloatControl;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 public final class MainPage extends javax.swing.JFrame {
     
@@ -16,9 +9,7 @@ public final class MainPage extends javax.swing.JFrame {
     int retrocesoamenu = 0;
     
     MainSound sound = new MainSound();
-    //File file = new File("/Audios/Menu Principal.wav");
     Boolean Maximized = false;
-     public float volb=0.5f;
     int cancion=1;
     public MainPage() {
         setUndecorated(true);
@@ -27,17 +18,14 @@ public final class MainPage extends javax.swing.JFrame {
         setTitle("Prueba del Conocimiento");
         setLocationRelativeTo(null);
         setResizable(false);
-        //PlayM(cancion);
 
         jSlider1.addChangeListener(e -> {
-            float volumen= jSlider1.getValue()/100.0f;
-            
-            sound.setVolumen(volumen); // Ajusta el volumen
+            float vol=jSlider1.getValue();
+            sound.setVolumen(vol);
         });
         Splash.num = 20;
         menuPrincipal();
         sound.identificarCancion(cancion);
-        sound.loopon(true);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -93,8 +81,10 @@ public final class MainPage extends javax.swing.JFrame {
         });
 
         jSlider1.setBackground(new java.awt.Color(255, 255, 255));
-        jSlider1.setMajorTickSpacing(20);
-        jSlider1.setMinorTickSpacing(10);
+        jSlider1.setMajorTickSpacing(14);
+        jSlider1.setMaximum(6);
+        jSlider1.setMinimum(-50);
+        jSlider1.setMinorTickSpacing(7);
         jSlider1.setPaintTicks(true);
         jSlider1.setSnapToTicks(true);
         jSlider1.setToolTipText("");
@@ -406,31 +396,18 @@ public final class MainPage extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        float vol=-22;
         try{
-            float volu=sound.volumen;
-            if(volu>0.00f){
-                jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/close.png")));
-                volu=0.00f;
-                sound.setVolumen(volu);
-            }else{
-                jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/volume.png")));
-                volu=0.50f;
-                sound.setVolumen(volu);
+            sound.mute(vol);
+            if(sound.mut==false){
+                jSlider1.setValue((int)vol);
+            }else if(sound.mut==true){
+                jSlider1.setValue(-50);
             }
         }catch(Exception e){
             System.out.println("error en el volumen");
         }
     }//GEN-LAST:event_jButton4ActionPerformed
-
-    
-    public void PlayM(int cancion) {
-        try{
-            Thread.sleep(5000);
-        }catch(Exception e){
-            System.out.println(e);
-        }
-        //sound.setVolumen(volb);
-    }
     
     private void menuPrincipal(){
         jButton5.setVisible(true);
