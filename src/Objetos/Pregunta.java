@@ -13,7 +13,7 @@ public class Pregunta {
     public int pts, id_materia;
     //Conexion_base_de_datos conn=new Conexion_base_de_datos();
     public void buscar_materia(String materia, String tema, String pregunta){
-        
+        //conn.buscar_materia(materia, tema, pregunta);
     }
     public void escribir_p(int id, String p){
         //conn.buscar_pregunta(id, p);
