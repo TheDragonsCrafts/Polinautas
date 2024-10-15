@@ -14,8 +14,7 @@ public class Usuario {
     //Conexion_base_de_datos conn=new Conexion_base_de_datos();
     
     public void cambiar_pts(int puntos){
-        pts=puntos;
-        //conn.escribir_pts(pts, id);
+        //conn.escribir_pts(puntos, id);
     }
     public void mostrar_pts(){
         
