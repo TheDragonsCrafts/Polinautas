@@ -1,16 +1,7 @@
 package Formularios;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Shape;
-import java.net.URL;
-import java.time.Duration;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import javax.swing.JProgressBar;
 
 public final class Splash extends javax.swing.JFrame {
     

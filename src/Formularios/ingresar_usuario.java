@@ -4,6 +4,7 @@
  */
 package Formularios;
 
+import Objetos.Conexion_base_de_datos;
 import java.awt.Point;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -139,7 +140,7 @@ public class ingresar_usuario extends javax.swing.JFrame {
                 .addGap(7, 7, 7))
         );
 
-        btnCon.setText("Iniciar Sesión");
+        btnCon.setText("Registrarse");
         btnCon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConActionPerformed(evt);
@@ -186,9 +187,9 @@ public class ingresar_usuario extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(47, 47, 47)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnReg, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCon))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnReg, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                    .addComponent(btnCon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCon1)
@@ -293,26 +294,35 @@ public class ingresar_usuario extends javax.swing.JFrame {
 
     private void btnConActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConActionPerformed
         // TODO add your handling code here:
-        String name=etxtname.getText(), email=etxtemail.getText(), password=new String(etxtPass.getPassword()), id="";
-        //if(cDB.buscar_usuario(name, email, password, id)){
+        String name=etxtname.getText(), email=etxtemail.getText();
+        char[] password=etxtPass.getPassword();
+        String pass=new String(password);
+        /*cDB.buscar_usuario(name, email, pass);
+        if(cDB.us==true){
+            JOptionPane.showMessageDialog(rootPane, "Este usuario ya existe");
+        }else if(cDB.us==false){
+            cDB.registrar_usuario(name, email, pass);*/
             MainPage s=new MainPage();
             s.setVisible(true);
-            dispose();
-        //}else{
-            //JOptionPane.showMessageDialog(rootPane, "ingrese los datos faltantes");
-        //}
+            dispose();/*
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "ingrese los datos faltantes");
+        }*/
     }//GEN-LAST:event_btnConActionPerformed
 
     private void btnCon1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCon1ActionPerformed
         // TODO add your handling code here:
-        String name=etxtname.getText(), email=etxtemail.getText(), password=new String(etxtPass.getPassword()), id="";
-        //if(cDB.buscar_usuario(name, email, password, id)){
+        String name=etxtname.getText(), email=etxtemail.getText();
+        char[] password=etxtPass.getPassword();
+        String pass=new String(password);
+        /*cDB.buscar_usuario(name, email, pass);
+        if(cDB.us==true){*/
             MainPage s=new MainPage();
             s.setVisible(true);
-            dispose();
-        //}else{
-            //JOptionPane.showMessageDialog(rootPane, "ingrese los datos faltantes");
-        //}
+            dispose();/*
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "ingrese los datos faltantes o usuario no existente");
+        }*/
     }//GEN-LAST:event_btnCon1ActionPerformed
 
     private void btnISActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnISActionPerformed
@@ -325,6 +335,11 @@ public class ingresar_usuario extends javax.swing.JFrame {
         registrar();
     }//GEN-LAST:event_btnRegActionPerformed
 
+    public void lim(){
+        etxtPass.setText("");
+        etxtemail.setText("");
+        etxtemail.setText("");
+    }
     public void menu(){
         btnIS.setVisible(true);
         btnReg.setVisible(true);
