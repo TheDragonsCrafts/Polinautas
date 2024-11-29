@@ -4,7 +4,6 @@
  */
 package Formularios;
 
-import Objetos.Conexion_base_de_datos;
 import java.awt.Point;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -13,16 +12,18 @@ import javax.swing.JOptionPane;
  *
  * @author Rodol
  */
-public class ingresar_usuario extends javax.swing.JFrame {
+//esta clase se mantendra para uso futuro pero ya no hace nada en el programa
+public class initUser extends javax.swing.JFrame {
 
     /**
-     * Creates new form ingresar_usuario
+     * Creates new form initUser
      */
-    Conexion_base_de_datos cDB=new Conexion_base_de_datos();
+    public Usuario Us;
     private Point point;
     int retrocesoamenu = 0;
     Boolean Maximized = false;
-    public ingresar_usuario() {
+    public initUser(Usuario U) {
+        this.Us=U;
         setUndecorated(true);
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/Icon.jfif")).getImage());
@@ -294,45 +295,22 @@ public class ingresar_usuario extends javax.swing.JFrame {
 
     private void btnConActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConActionPerformed
         // TODO add your handling code here:
-        String name=etxtname.getText(), email=etxtemail.getText();
-        char[] password=etxtPass.getPassword();
-        String pass=new String(password);
-        /*cDB.buscar_usuario(name, email, pass);
-        if(cDB.us==true){
-            JOptionPane.showMessageDialog(rootPane, "Este usuario ya existe");
-        }else if(cDB.us==false){
-            cDB.registrar_usuario(name, email, pass);*/
-            MainPage s=new MainPage();
-            s.setVisible(true);
-            dispose();/*
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "ingrese los datos faltantes");
-        }*/
+        
     }//GEN-LAST:event_btnConActionPerformed
 
     private void btnCon1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCon1ActionPerformed
         // TODO add your handling code here:
-        String name=etxtname.getText(), email=etxtemail.getText();
-        char[] password=etxtPass.getPassword();
-        String pass=new String(password);
-        /*cDB.buscar_usuario(name, email, pass);
-        if(cDB.us==true){*/
-            MainPage s=new MainPage();
-            s.setVisible(true);
-            dispose();/*
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "ingrese los datos faltantes o usuario no existente");
-        }*/
+        
     }//GEN-LAST:event_btnCon1ActionPerformed
 
     private void btnISActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnISActionPerformed
         // TODO add your handling code here:
-        inicio_sesion();
+        GuardarDat();
     }//GEN-LAST:event_btnISActionPerformed
 
     private void btnRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegActionPerformed
         // TODO add your handling code here:
-        registrar();
+        
     }//GEN-LAST:event_btnRegActionPerformed
 
     public void lim(){
@@ -353,7 +331,7 @@ public class ingresar_usuario extends javax.swing.JFrame {
         txtemail.setVisible(false);
         txtPass.setVisible(false);
     }
-    public void inicio_sesion(){
+    public void GuardarDat(){
         btnIS.setVisible(false);
         btnReg.setVisible(false);
         btnCon.setVisible(false);
@@ -365,22 +343,9 @@ public class ingresar_usuario extends javax.swing.JFrame {
         txtname.setVisible(true);
         txtemail.setVisible(true);
         txtPass.setVisible(true);
-    }
-    public void registrar(){
-        btnIS.setVisible(false);
-        btnReg.setVisible(false);
-        btnCon.setVisible(true);
-        btnCon1.setVisible(false);
-        txt1.setVisible(false);
-        etxtemail.setVisible(true);
-        etxtname.setVisible(true);
-        etxtPass.setVisible(true);
-        txtname.setVisible(true);
-        txtemail.setVisible(true);
-        txtPass.setVisible(true);
-        txtname.setText("Ingrese un nombre:");
-        txtemail.setText("Ingrese un correo electronico:");
-        txtPass.setText("crea una contraseña:");
+        txtname.setText("Ingrese su nombre:");
+        txtemail.setText("Ingrese su correo electronico:");
+        txtPass.setText("Ingrese su contraseña:");
     }
     /**
      * @param args the command line arguments
@@ -399,20 +364,22 @@ public class ingresar_usuario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ingresar_usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(initUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ingresar_usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(initUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ingresar_usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(initUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ingresar_usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(initUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ingresar_usuario().setVisible(true);
+                Usuario U=new Usuario();
+                new initUser(U).setVisible(true);
             }
         });
     }

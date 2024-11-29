@@ -10,6 +10,7 @@ import java.awt.*;
  *
  * @author IanDa
  */
+//esta clase muestra la pantalla donde estara el laberinto
 public class LaberintoVentana extends javax.swing.JFrame {
     public LaberintoVentana() {
         super("Laberintos");
