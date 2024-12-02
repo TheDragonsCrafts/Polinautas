@@ -4,6 +4,7 @@
  */
 package Objetos;
 
+import Formularios.Usuario;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -20,7 +21,7 @@ public class Conexion_base_de_datos {
     private static final String PASSWORD = "contraseña";
     private Connection conn = null;
     public boolean us=false, pr=false;
-    Usuario U=new Usuario(); Pregunta P=new Pregunta();
+    Usuario U=new Usuario();
     public void connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -60,7 +61,7 @@ public class Conexion_base_de_datos {
             pst.setString(2, p);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                
+                /*
                     P.id_materia=rs.getInt("id");
                     P.pregunta=rs.getString("pregunta");
                     P.res1=rs.getString("res1");
@@ -68,7 +69,7 @@ public class Conexion_base_de_datos {
                     P.res3=rs.getString("res3");
                     P.res4=rs.getString("res4");
                     P.pts=rs.getInt("pts");
-                    pr=true;
+                    pr=true;*/
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -101,7 +102,7 @@ public class Conexion_base_de_datos {
                     U.id=rs.getInt("id");
                     U.nombre=rs.getString("nombre");
                     U.email=rs.getString("email");
-                    U.Pass=rs.getString("Pass");
+                    U.pass=rs.getString("Pass");
                     U.pts=rs.getInt("pts");
                     us=true;
             }
