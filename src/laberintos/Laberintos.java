@@ -8,7 +8,7 @@ package laberintos;
  *
  * @author IanDa
  */
-public class Laberintos {//clase para iniciar el laberinto
+public class Laberintos {
 
     /**
      * @param args the command line arguments

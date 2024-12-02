@@ -24,7 +24,7 @@ public final class MainPage extends javax.swing.JFrame {
         setUndecorated(true);
         initComponents();
         setSize(800, 433);//indica el espacio predeterminado del panel
-        jLabel1.setText("pts: "+U.pts);
+        jLabel1.setText("pts: "+U.pts);//muestra los puntos del usuario
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/Icon.jfif")).getImage());//imprime una imagen en el icono del programa
         setTitle("Prueba del Conocimiento");
         setLocationRelativeTo(null);
