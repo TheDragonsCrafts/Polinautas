@@ -24,7 +24,7 @@ public class LaberintoPanel extends JPanel implements KeyListener {
     private int tamCelda = 40; // Tamaño de celdas NO MOVER DE 40 a menos que se ajuste el tamaño del laberinto
     private JLabel nivelLabel;
     
-    private int totalNiveles = 10; // Puedes cambiar este valor al número de niveles que desees
+    private int totalNiveles = 1; // Puedes cambiar este valor al número de niveles que desees
     
     
 //Advertencia mover tamCelda y la variable laberintos[i] = generarLaberintoDFS();
@@ -57,7 +57,7 @@ public class LaberintoPanel extends JPanel implements KeyListener {
    private void generarLaberintos() {
     laberintos = new int[totalNiveles][][];
     for (int i = 0; i < totalNiveles; i++) {
-        laberintos[i] = generarLaberintoDFS(15, 15); // Puedes ajustar el tamaño del laberinto aquí
+        laberintos[i] = generarLaberintoDFS(15,15); // Puedes ajustar el tamaño del laberinto aquí
                                                      //NO MOVER a menos que se ajuste tamCelda 
     }
 }
