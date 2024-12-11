@@ -284,7 +284,6 @@
     <Container class="javax.swing.JInternalFrame" name="JintFrame2">
       <Properties>
         <Property name="defaultCloseOperation" type="int" value="0"/>
-        <Property name="resizable" type="boolean" value="true"/>
         <Property name="visible" type="boolean" value="true"/>
       </Properties>
 

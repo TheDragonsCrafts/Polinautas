@@ -18,13 +18,14 @@ public final class MainPage extends javax.swing.JFrame {
     Boolean Maximized = false;
     int cancion=1;
     FondoPanel fondo = new FondoPanel();//se hace llamado a la clase fondo panel
+    
     public MainPage(Usuario Us) {
         this.setContentPane(fondo);//este establecera como ajustes del panel los atributos del objeto "fondo"
         this.U=Us;//iguala los datos del objeto de la clase usuario del panel anterior con el actual
         setUndecorated(true);
         initComponents();
         setSize(800, 433);//indica el espacio predeterminado del panel
-        jLabel1.setText("pts: "+U.pts);//muestra los puntos del usuario
+        jLabel1.setText("pts: "+U.pts);
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/Icon.jfif")).getImage());//imprime una imagen en el icono del programa
         setTitle("Prueba del Conocimiento");
         setLocationRelativeTo(null);
@@ -34,6 +35,11 @@ public final class MainPage extends javax.swing.JFrame {
             sound.setVolumen(vol);
         });
         Splash.num = 20;
+        
+        // Registramos el botón del idioma
+        Idioma.registrarComponente("idioma", btnIdioma);
+        Idioma.actualizarTextos();
+
         menuPrincipal();
         sound.identificarCancion(cancion);//identidica que cancion se quiere usar atraves del valor de la variable cancion
     }
@@ -67,6 +73,7 @@ public final class MainPage extends javax.swing.JFrame {
         filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
         jButton17 = new javax.swing.JButton();
         jButton18 = new javax.swing.JButton();
+        btnIdioma = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -296,6 +303,13 @@ public final class MainPage extends javax.swing.JFrame {
             }
         });
 
+        btnIdioma.setText("idioma");
+        btnIdioma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIdiomaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -322,32 +336,33 @@ public final class MainPage extends javax.swing.JFrame {
                         .addGap(72, 72, 72)))
                 .addComponent(filler3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton8)
-                        .addContainerGap())
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(filler4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(filler4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton16, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                            .addComponent(jButton17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 109, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(34, 34, 34)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButton16, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
-                                    .addComponent(jButton17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(0, 109, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())))))
+                                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(146, 146, 146)
+                                .addComponent(btnIdioma)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton8)))
+                        .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -357,7 +372,9 @@ public final class MainPage extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton8)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jButton8)
+                                .addComponent(btnIdioma))
                             .addComponent(jButton9))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -428,8 +445,12 @@ public final class MainPage extends javax.swing.JFrame {
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         //este metodo se encarga de evaluar que funcion hara a travez del texto que se le imprimio con algun metodo
         switch(jButton10.getText()){
-            case "Tronco Comun": tronco_comun(); break;//hace llamado al metodo troncocomun cuando se le da click al boton
-            case "Base de Datos": M.id_materia=8; ForP(U); break;//hace llamado al metodo ForP he indica que la materia seleccionada es de id 8
+            case "Tronco Común":
+            case "Common Core":
+                tronco_comun(); break;
+            case "Base de Datos":
+            case "Database":
+                M.id_materia=8; ForP(U); break;
         }
     }//GEN-LAST:event_jButton10ActionPerformed
 
@@ -445,19 +466,26 @@ public final class MainPage extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         //este metodo se encarga de evaluar que funcion hara a travez del texto que se le imprimio con algun metodo
-        switch(jButton7.getText()){
-            case "Mercadotecnia digital": Mensaje(); break;
-            case "Herramientas de Porgramacion": M.id_materia=5; ForP(U); break;//hace llamado al metodo ForP he indica que la materia seleccionada es de id 5
-            case "Cálculo Integral": M.id_materia=14; ForP(U); break;//hace llamado al metodo ForP he indica que la materia seleccionada es de id 14
+        // Dependiendo del texto actual (ya en el idioma que corresponda)
+        String txt = jButton7.getText();
+        if(txt.equals("Mercadotecnia digital") || txt.equals("Digital Marketing")){
+            Mensaje();
+        } else if(txt.equals("PDDM") ){
+            M.id_materia=3; ForP(U);
+        } else if(txt.equals("Cálculo Integral")|| txt.equals("Integral Calculus")){
+            M.id_materia=14; ForP(U);
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         //este metodo se encarga de evaluar que funcion hara a travez del texto que se le imprimio con algun metodo
-        switch(jButton6.getText()){
-            case "Contabilidad": Mensaje(); break;
-            case "Modelado de sistemas": M.id_materia=2; ForP(U); break;//hace llamado al metodo ForP he indica que la materia seleccionada es de id 2
-            case "Orientacion Juvenil y Profecional III": M.id_materia=11; ForP(U); break;//hace llamado al metodo ForP he indica que la materia seleccionada es de id 11
+        String txt = jButton6.getText();
+        if(txt.equals("Contabilidad") || txt.equals("Accounting")){
+            Mensaje();
+        } else if(txt.equals("Modelado de sistemas") || txt.equals("Systems Modeling")){
+            M.id_materia=2; ForP(U);
+        } else if(txt.equals("Orientacion Juvenil y Profecional III") || txt.equals("Professional Guidance III")){
+            M.id_materia=11; ForP(U);
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -491,13 +519,12 @@ public final class MainPage extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //este metodo se ocupa para maximizar y minimizar la pantalla y cambiar la imagemn del boton
-        if(Maximized == false){
+         if(Maximized == false){
             setExtendedState(MAXIMIZED_BOTH);
             jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/minimize.png")));
-
             Maximized = true;
         }else{
-            this.setSize(713, 400);
+            this.setSize(800, 433);
             setLocationRelativeTo(null);
             jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/maximize.png")));
             Maximized = false;
@@ -527,33 +554,41 @@ public final class MainPage extends javax.swing.JFrame {
     
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         //este metodo se encarga de evaluar que funcion hara a travez del texto que se le imprimio con algun metodo
-        switch(jButton13.getText()){
-            case "PDDM": M.id_materia=3; ForP(U); break;//hace llamado al metodo ForP he indica que la materia seleccionada es de id 3
-            case "Contabilidad III": M.id_materia=12; ForP(U); break;//hace llamado al metodo ForP he indica que la materia seleccionada es de id 12
+         String txt = jButton13.getText();
+        if(txt.equals("Herramientas de Programación") || txt.equals("Programming Tools")){
+            M.id_materia=5; ForP(U);
+        } else if (txt.equals("Contabilidad III") || txt.equals("Accounting III")){
+            M.id_materia=12; ForP(U);
         }
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
         //este metodo se encarga de evaluar que funcion hara a travez del texto que se le imprimio con algun metodo
-        switch(jButton14.getText()){
-            case "Interacción Usuario Computadora": M.id_materia=1; ForP(U); break;//hace llamado al metodo ForP he indica que la materia seleccionada es de id 1
-            case "Inglés V": M.id_materia=10; ForP(U); break;//hace llamado al metodo ForP he indica que la materia seleccionada es de id 10
+        String txt = jButton14.getText();
+        if(txt.equals("Teleinformáctica") || txt.equals("Teleinformatics")){
+            M.id_materia=1; ForP(U);
+        } else if(txt.equals("Inglés V") || txt.equals("English V")){
+            M.id_materia=10; ForP(U);
         }
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
         //este metodo se encarga de evaluar que funcion hara a travez del texto que se le imprimio con algun metodo
-        switch(jButton15.getText()){
-            case "Sistemas Operativos": M.id_materia=4; ForP(U); break;//hace llamado al metodo ForP he indica que la materia seleccionada es de id 4
-            case "Microeconomía": M.id_materia=13; ForP(U); break;//hace llamado al metodo ForP he indica que la materia seleccionada es de id 13
+         String txt = jButton15.getText();
+        if(txt.equals("Sistemas Operativos") || txt.equals("Operating Systems")){
+            M.id_materia=4; ForP(U);
+        } else if(txt.equals("Microeconomía") || txt.equals("Microeconomics")){
+            M.id_materia=13; ForP(U);
         }
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
         //este metodo se encarga de evaluar que funcion hara a travez del texto que se le imprimio con algun metodo
-        switch(jButton16.getText()){
-            case "Teleinformactica": M.id_materia=6; ForP(U);  break;//hace llamado al metodo ForP he indica que la materia seleccionada es de id 6
-            case "Derecho Mercantil": M.id_materia=15; ForP(U); break;//hace llamado al metodo ForP he indica que la materia seleccionada es de id 15
+        String txt = jButton16.getText();
+        if(txt.equals("Interacción Usuario Computadora") || txt.equals("User-Computer Interaction")){
+            M.id_materia=6; ForP(U);
+        } else if(txt.equals("Derecho Mercantil") || txt.equals("Business Law")){
+            M.id_materia=15; ForP(U);
         }
     }//GEN-LAST:event_jButton16ActionPerformed
 
@@ -566,17 +601,18 @@ public final class MainPage extends javax.swing.JFrame {
         //este metodo se encarga de evaluar que funcion hara a travez del texto que se le imprimio con algun metodo
         M.id_materia=9;ForP(U);//hace llamado al metodo ForP he indica que la materia seleccionada es de id 9
     }//GEN-LAST:event_jButton17ActionPerformed
-    private void menuPrincipal(){//este metodo indica que componentes seran visibles y los textos que son necesarios para el menu
+
+    private void btnIdiomaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIdiomaActionPerformed
+        Idioma.cambiarIdioma();
+    }//GEN-LAST:event_btnIdiomaActionPerformed
+    private void menuPrincipal(){
+        // Mostrar/ocultar botones
         jButton5.setVisible(true);
-        jButton5.setText("Informatica");
         jButton6.setVisible(true);
-        jButton6.setText("Contabilidad");
         jButton7.setVisible(true);
-        jButton7.setText("Mercadotecnia digital");
         jButton8.setVisible(true);
         jButton9.setVisible(true);
         jButton10.setVisible(true);
-        jButton10.setText("Tronco Comun");
         jButton11.setVisible(false);
         jButton12.setVisible(false);
         jButton13.setVisible(false);
@@ -586,8 +622,20 @@ public final class MainPage extends javax.swing.JFrame {
         jButton17.setVisible(false);
         jButton18.setVisible(false);
         retrocesoamenu = 0;
+        
+        // Registrar las claves para este menú
+        Idioma.registrarComponente("informatica", jButton5);
+        Idioma.registrarComponente("contabilidad", jButton6);
+        Idioma.registrarComponente("mercadotecnia_digital", jButton7);
+        Idioma.registrarComponente("ajustes", jButton8);
+        Idioma.registrarComponente("creditos", jButton9);
+        Idioma.registrarComponente("tronco_comun", jButton10);
+        // jButton11 y jButton12 no se usan acá
+
+        Idioma.actualizarTextos();
     }
-    private void ajustes(){//este metodo indica que componentes seran visibles y los textos que son necesarios para el menu de ajustes
+    
+    private void ajustes(){
         jButton5.setVisible(false);
         jButton6.setVisible(false);
         jButton7.setVisible(false);
@@ -603,8 +651,14 @@ public final class MainPage extends javax.swing.JFrame {
         jButton17.setVisible(false);
         jButton18.setVisible(false);
         retrocesoamenu = 1;
+
+        // Registrar clave
+        Idioma.registrarComponente("retroceder", jButton12);
+
+        Idioma.actualizarTextos();
     }
-    private void informática(){//este metodo indica que componentes seran visibles y los textos que son necesarios para el menu de materias de informatica
+
+   private void informática(){
         jButton5.setVisible(false);
         jButton6.setVisible(true);
         jButton7.setVisible(true);
@@ -619,21 +673,28 @@ public final class MainPage extends javax.swing.JFrame {
         jButton16.setVisible(true);
         jButton17.setVisible(true);
         jButton18.setVisible(true);
-        jButton6.setText("Modelado de sistemas");
-        jButton14.setText("Teleinformactica");
-        jButton13.setText("Herramientas de Porgramacion");
-        jButton15.setText("Sistemas Operativos");
-        jButton7.setText("PDDM");
-        jButton16.setText("Interacción Usuario Computadora");
-        jButton17.setText("Ensamblado y Mantenimiento de pc´s");
-        jButton10.setText("Base de Datos");
-        jButton18.setText("POO");
         retrocesoamenu = 2;
+        
+        // Registrar las claves de este menú informático
+        Idioma.registrarComponente("modelado_sistemas", jButton6);
+        Idioma.registrarComponente("pddm", jButton7);
+        Idioma.registrarComponente("base_datos", jButton10);
+        Idioma.registrarComponente("menu_principal", jButton11);
+        Idioma.registrarComponente("herramientas_programacion", jButton13);
+        Idioma.registrarComponente("teleinformactica", jButton14);
+        Idioma.registrarComponente("sistemas_operativos", jButton15);
+        Idioma.registrarComponente("iu_computadora", jButton16);
+        Idioma.registrarComponente("ensamblado", jButton17);
+        Idioma.registrarComponente("poo", jButton18);
+
+        Idioma.actualizarTextos();
     }
-    private void Mensaje (){//mostrara un mensaje
-        JOptionPane.showMessageDialog(rootPane, "Proximamente");
-    }
-    private void tronco_comun(){//este metodo indica que componentes seran visibles y los textos que son necesarios para el menu de materias de tronco comun
+   
+    private void Mensaje (){
+    JOptionPane.showMessageDialog(rootPane, Idioma.getTexto("proximamente"));
+}
+
+    private void tronco_comun(){
         jButton5.setVisible(false);
         jButton6.setVisible(true);
         jButton7.setVisible(true);
@@ -648,15 +709,19 @@ public final class MainPage extends javax.swing.JFrame {
         jButton16.setVisible(true);
         jButton17.setVisible(false);
         jButton18.setVisible(false);
-        jButton6.setText("Orientacion Juvenil y Profecional III");
-        jButton7.setText("Cálculo Integral");
-        jButton14.setText("Inglés V");
-        jButton13.setText("Contabilidad III");
-        jButton15.setText("Microeconomía");
-        jButton16.setText("Derecho Mercantil");
         retrocesoamenu = 3;
+
+        Idioma.registrarComponente("orientacion_juv_prof", jButton6);
+        Idioma.registrarComponente("calculo_integral", jButton7);
+        Idioma.registrarComponente("menu_principal", jButton11);
+        Idioma.registrarComponente("contabilidad_iii", jButton13);
+        Idioma.registrarComponente("inglés_v", jButton14);
+        Idioma.registrarComponente("microeconomia", jButton15);
+        Idioma.registrarComponente("derecho_mercantil", jButton16);
+
+        Idioma.actualizarTextos();
     }
-    private void creditos(){//este metodo indica que componentes seran visibles y los textos que son necesarios para la pantalla de creditos
+    private void creditos(){
         jButton5.setVisible(false);
         jButton6.setVisible(false);
         jButton7.setVisible(false);
@@ -669,12 +734,18 @@ public final class MainPage extends javax.swing.JFrame {
         jButton14.setVisible(false);
         jButton15.setVisible(false);
         jButton16.setVisible(false);
+        jButton17.setVisible(false);
+        jButton18.setVisible(false);
         retrocesoamenu = 4;
+
+        Idioma.registrarComponente("retroceder", jButton12);
+
+        Idioma.actualizarTextos();
     }
-    public void ForP(Usuario Us){//hace llamado a la clase Formularios y la hace visible
+     public void ForP(Usuario Us){
         Formulario FP=new Formulario(U);//hace llamado de la clase
         FP.setVisible(true);//hace visible la clase
-        sound.stop(); sound.close();//quita la musica de la pantalla actual
+        sound.stop(); sound.close();//quita la musica
         dispose();//cierra la pantalla actual
     }
     public static void main(String args[]) {
@@ -709,6 +780,7 @@ public final class MainPage extends javax.swing.JFrame {
     });
 }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnIdioma;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
     private javax.swing.Box.Filler filler4;

@@ -195,7 +195,6 @@ public class Formulario extends javax.swing.JFrame {
         );
 
         JintFrame2.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        JintFrame2.setResizable(true);
         JintFrame2.setVisible(true);
 
         jLabel2.setText("aqui apareceran las preguntas");
