@@ -6,11 +6,21 @@ package Formularios;
 
 import java.awt.BorderLayout;
 import java.awt.Point;
+import java.awt.FlowLayout; // Added import
+import java.awt.event.ActionEvent; // Added import
+import java.awt.event.ActionListener; // Added import
 import javax.swing.ImageIcon;
+import javax.swing.JButton; // Added import
+import javax.swing.JLabel; // Added import
+import javax.swing.JOptionPane; // Added import
 import laberintos.LaberintoPanel;
-public class Formulario extends javax.swing.JFrame {
+import laberintos.MazeListener; // Added import
+
+public class Formulario extends javax.swing.JFrame implements MazeListener { // Implemented MazeListener
     //variables
     private Point point;
+    private JLabel questionLabel; // Added field
+    private JButton answerButton; // Added field
     int retrocesoamenu = 0;
     private Usuario Us;//se crea un objeto de la clase Usuario
     LaberintoPanel labP;//se crea un objeto de la clase LaberintoPanel
@@ -33,6 +43,32 @@ public class Formulario extends javax.swing.JFrame {
             sound.setVolumen(vol);
         });
         //sound.identificarCancion(cancion);//identidica que cancion se quiere usar atraves del valor de la variable cancion
+
+        // --- JintFrame2 modification START ---
+        JintFrame2.getContentPane().removeAll();
+        JintFrame2.getContentPane().setLayout(new FlowLayout());
+
+        questionLabel = new JLabel("What is the capital of France?");
+        JintFrame2.getContentPane().add(questionLabel);
+
+        answerButton = new JButton("Paris");
+        answerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Us != null) {
+                    int pointsToAward = 50; // Example points
+                    Us.pts += pointsToAward;
+                    Us.guardar_datos();
+                    jLabel1.setText("pts: " + Us.pts); // jLabel1 is the points display on the main Formulario frame
+                    JOptionPane.showMessageDialog(Formulario.this, "Correct! You earned " + pointsToAward + " points.", "Question Answered", JOptionPane.INFORMATION_MESSAGE);
+                    answerButton.setEnabled(false); // Disable button after answering
+                }
+            }
+        });
+        JintFrame2.getContentPane().add(answerButton);
+        JintFrame2.revalidate();
+        JintFrame2.repaint();
+        // --- JintFrame2 modification END ---
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -318,12 +354,37 @@ public class Formulario extends javax.swing.JFrame {
 
     public void cargar_laberinto(){//este metodo cargara un laberinto
         if (labP == null){ 
-            labP = new LaberintoPanel(); 
-        } 
+            labP = new LaberintoPanel();
+            labP.setMazeListener(this); // Set listener
+        }
+        jLabel3.setVisible(false); // Hide placeholder
         JintFrame1.add(labP, BorderLayout.CENTER); 
         labP.requestFocusInWindow(); 
         JintFrame1.revalidate();
     }
+
+    @Override
+    public void mazeCompleted(int points) {
+        if (Us != null) { // Check if Us (Usuario object) exists
+            Us.pts += points; // Directly add points
+            Us.guardar_datos();
+            jLabel1.setText("pts: " + Us.pts);
+            JOptionPane.showMessageDialog(this, "Maze Cleared! You earned " + points + " points.", "Success", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        // Reset the maze display area
+        if (labP != null) {
+            JintFrame1.remove(labP);
+            labP = null; // Nullify to allow reloading a fresh one if needed
+        }
+        jLabel3.setVisible(true); // Show the placeholder text again
+        JintFrame1.revalidate();
+        JintFrame1.repaint();
+        
+        // Optionally, re-enable buttons or navigate back
+        // For now, this just clears the maze area.
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -363,12 +424,13 @@ public class Formulario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JInternalFrame JintFrame1;
     private javax.swing.JInternalFrame JintFrame2;
+    // private javax.swing.JLabel jLabel2; // Commented out as it's replaced
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    // jLabel2 is effectively removed by getContentPane().removeAll()
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JProgressBar jProgressBar1;

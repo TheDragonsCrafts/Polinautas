@@ -23,6 +23,7 @@ public class LaberintoPanel extends JPanel implements KeyListener {
     private int metaColumna;
     private int tamCelda = 40; // Tamaño de celdas NO MOVER DE 40 a menos que se ajuste el tamaño del laberinto
     private JLabel nivelLabel;
+    private MazeListener listener; // Added listener field
     
     private int totalNiveles = 1; // Puedes cambiar este valor al número de niveles que desees
     
@@ -52,6 +53,11 @@ public class LaberintoPanel extends JPanel implements KeyListener {
 
     public JLabel getNivelLabel() {
         return nivelLabel;
+    }
+
+    // Added setter for listener
+    public void setMazeListener(MazeListener listener) {
+        this.listener = listener;
     }
 
    private void generarLaberintos() {
@@ -194,13 +200,18 @@ public class LaberintoPanel extends JPanel implements KeyListener {
     }
 
    private void finDelJuego() {
-    JOptionPane.showMessageDialog(this, "¡Juego Completado!", "¡Felicidades!", JOptionPane.INFORMATION_MESSAGE);
+    //JOptionPane.showMessageDialog(this, "¡Juego Completado!", "¡Felicidades!", JOptionPane.INFORMATION_MESSAGE);
+    if (listener != null) {
+        int pointsAwarded = 100; // Example: 100 points for completing all mazes
+        listener.mazeCompleted(pointsAwarded);
+    }
+    this.setVisible(false); // Hide the panel
     //Obtener la ventana principal y cerrarla
     Window ventana = SwingUtilities.getWindowAncestor(this);
     if (ventana != null) {
         ventana.dispose();
         // Terminar la app
-        System.exit(0);
+        //System.exit(0); // Removed System.exit(0)
     }
 }
 

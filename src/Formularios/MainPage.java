@@ -26,6 +26,10 @@ public final class MainPage extends javax.swing.JFrame {
         initComponents();
         setSize(800, 433);//indica el espacio predeterminado del panel
         jLabel1.setText("pts: "+U.pts);
+        if (usernameLabel != null) { // Check if label is initialized
+            usernameLabel.setText("User: " + U.nombre);
+            usernameLabel.setForeground(java.awt.Color.WHITE); // Set text color to white for visibility
+        }
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/Icon.jfif")).getImage());//imprime una imagen en el icono del programa
         setTitle("Prueba del Conocimiento");
         setLocationRelativeTo(null);
@@ -56,6 +60,7 @@ public final class MainPage extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        usernameLabel = new javax.swing.JLabel(); // Initialize usernameLabel
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
@@ -176,6 +181,8 @@ public final class MainPage extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE) // Added usernameLabel
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED) // Space between usernameLabel and jLabel1
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -190,6 +197,7 @@ public final class MainPage extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(usernameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE) // Added usernameLabel
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -803,6 +811,7 @@ public final class MainPage extends javax.swing.JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel usernameLabel; // Added usernameLabel field
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     public javax.swing.JSlider jSlider1;
