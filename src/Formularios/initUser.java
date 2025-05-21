@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
  *
  * @author Rodol
  */
-//esta clase se mantendra para uso futuro pero ya no hace nada en el programa
 public class initUser extends javax.swing.JFrame {
 
     /**
@@ -24,6 +23,7 @@ public class initUser extends javax.swing.JFrame {
     Boolean Maximized = false;
     public initUser(Usuario U) {
         this.Us=U;
+        Us.cargar_datos();
         setUndecorated(true);
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/Icon.jfif")).getImage());
@@ -300,12 +300,20 @@ public class initUser extends javax.swing.JFrame {
 
     private void btnCon1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCon1ActionPerformed
         // TODO add your handling code here:
-        
+        String username = etxtname.getText();
+        if (!username.isEmpty()) {
+            Us.cambiar_nom(username);
+            Us.guardar_datos(); // Assuming this method exists in Usuario class
+            new MainPage(Us).setVisible(true);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un nombre de usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnCon1ActionPerformed
 
     private void btnISActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnISActionPerformed
         // TODO add your handling code here:
-        GuardarDat();
+        setupLoginScreen();
     }//GEN-LAST:event_btnISActionPerformed
 
     private void btnRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegActionPerformed
@@ -330,22 +338,29 @@ public class initUser extends javax.swing.JFrame {
         txtname.setVisible(false);
         txtemail.setVisible(false);
         txtPass.setVisible(false);
+        // Ensure btnCon1 is also initially hidden
+        btnCon1.setVisible(false);
     }
-    public void GuardarDat(){
+    public void setupLoginScreen(){
+        txt1.setText("Enter your username"); // Or hide: txt1.setVisible(false);
+        etxtname.setVisible(true);
+        txtname.setVisible(true);
+        txtname.setText("Usuario:"); // Or "Nombre:"
+
+        // Hide email and password fields
+        etxtemail.setVisible(false);
+        txtemail.setVisible(false);
+        etxtPass.setVisible(false);
+        txtPass.setVisible(false);
+
+        // Repurpose btnCon1 as the login button
+        btnCon1.setText("Login"); // Or "Entrar"
+        btnCon1.setVisible(true);
+
+        // Hide initial buttons
         btnIS.setVisible(false);
         btnReg.setVisible(false);
-        btnCon.setVisible(false);
-        btnCon1.setVisible(true);
-        txt1.setVisible(false);
-        etxtemail.setVisible(true);
-        etxtname.setVisible(true);
-        etxtPass.setVisible(true);
-        txtname.setVisible(true);
-        txtemail.setVisible(true);
-        txtPass.setVisible(true);
-        txtname.setText("Ingrese su nombre:");
-        txtemail.setText("Ingrese su correo electronico:");
-        txtPass.setText("Ingrese su contraseña:");
+        btnCon.setVisible(false); // Also hide registration confirm button
     }
     /**
      * @param args the command line arguments
