@@ -1,36 +1,53 @@
 package Formularios;
 
+import Materias.Materias;
 import java.awt.Point;
 import javax.swing.ImageIcon;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public final class MainPage extends javax.swing.JFrame {
-    
+    //variables iniciales
     private Point point;
     int retrocesoamenu = 0;
-    
-    MainSound sound = new MainSound();
+    private Usuario U;//se crea un objeto de la clase usuario
+    Materias M=new Materias();//se crea un objeto de la clase materias
+    MainSound sound = new MainSound();//se hace llamado a la clase MainSound
     Boolean Maximized = false;
     int cancion=1;
-    public MainPage() {
+    FondoPanel fondo = new FondoPanel();//se hace llamado a la clase fondo panel
+    
+    public MainPage(Usuario Us) {
+        this.setContentPane(fondo);//este establecera como ajustes del panel los atributos del objeto "fondo"
+        this.U=Us;//iguala los datos del objeto de la clase usuario del panel anterior con el actual
         setUndecorated(true);
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/imagenes/Icon.jfif")).getImage());
+        setSize(800, 433);//indica el espacio predeterminado del panel
+        jLabel1.setText("pts: "+U.pts);
+        setIconImage(new ImageIcon(getClass().getResource("/imagenes/Icon.jfif")).getImage());//imprime una imagen en el icono del programa
         setTitle("Prueba del Conocimiento");
         setLocationRelativeTo(null);
         setResizable(false);
-
-        jSlider1.addChangeListener(e -> {
+        jSlider1.addChangeListener(e -> {//metodo utilizado para calcular el volumen deseado
             float vol=jSlider1.getValue();
             sound.setVolumen(vol);
         });
         Splash.num = 20;
+        
+        // Registramos el botón del idioma
+        Idioma.registrarComponente("idioma", btnIdioma);
+        Idioma.actualizarTextos();
+
         menuPrincipal();
-        sound.identificarCancion(cancion);
+        sound.identificarCancion(cancion);//identidica que cancion se quiere usar atraves del valor de la variable cancion
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        FondoPanel fondo=new FondoPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
@@ -38,6 +55,7 @@ public final class MainPage extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
@@ -47,11 +65,21 @@ public final class MainPage extends javax.swing.JFrame {
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
+        jButton14 = new javax.swing.JButton();
+        jButton15 = new javax.swing.JButton();
+        jButton16 = new javax.swing.JButton();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
+        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
+        jButton17 = new javax.swing.JButton();
+        jButton18 = new javax.swing.JButton();
+        btnIdioma = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setLocation(new java.awt.Point(0, 0));
 
+        jPanel2=fondo;
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(132, 0, 45), null));
 
         jPanel1.setBackground(new java.awt.Color(132, 0, 45));
@@ -83,11 +111,12 @@ public final class MainPage extends javax.swing.JFrame {
         jSlider1.setBackground(new java.awt.Color(255, 255, 255));
         jSlider1.setMajorTickSpacing(14);
         jSlider1.setMaximum(6);
-        jSlider1.setMinimum(-50);
+        jSlider1.setMinimum(-80);
         jSlider1.setMinorTickSpacing(7);
         jSlider1.setPaintTicks(true);
         jSlider1.setSnapToTicks(true);
         jSlider1.setToolTipText("");
+        jSlider1.setValue(-40);
         jSlider1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jSlider1.setFocusable(false);
         jSlider1.setMaximumSize(new java.awt.Dimension(200, 20));
@@ -147,6 +176,8 @@ public final class MainPage extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -159,11 +190,15 @@ public final class MainPage extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSlider1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSlider1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -226,10 +261,52 @@ public final class MainPage extends javax.swing.JFrame {
             }
         });
 
-        jButton13.setText("xD");
+        jButton13.setText("jButton13");
         jButton13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton13ActionPerformed(evt);
+            }
+        });
+
+        jButton14.setText("jButton14");
+        jButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton14ActionPerformed(evt);
+            }
+        });
+
+        jButton15.setText("jButton15");
+        jButton15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton15ActionPerformed(evt);
+            }
+        });
+
+        jButton16.setText("jButton16");
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton16ActionPerformed(evt);
+            }
+        });
+
+        jButton17.setText("jButton17");
+        jButton17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton17ActionPerformed(evt);
+            }
+        });
+
+        jButton18.setText("jButton18");
+        jButton18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton18ActionPerformed(evt);
+            }
+        });
+
+        btnIdioma.setText("idioma");
+        btnIdioma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIdiomaActionPerformed(evt);
             }
         });
 
@@ -238,70 +315,109 @@ public final class MainPage extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(318, 318, 318)
-                .addComponent(jButton10)
-                .addGap(283, 283, 283))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(162, 162, 162))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(322, 322, 322)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(72, 72, 72)
-                                        .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)))
-                .addComponent(jButton8)
-                .addGap(25, 25, 25))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 491, Short.MAX_VALUE)
-                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(filler2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addContainerGap()
+                                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton14, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton15, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(72, 72, 72)))
+                .addComponent(filler3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(filler4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton16, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                            .addComponent(jButton17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 109, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(146, 146, 146)
+                                .addComponent(btnIdioma)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton8)))
+                        .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(345, 345, 345)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(14, 14, 14))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton8)
-                            .addComponent(jButton9))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton13))
-                        .addGap(58, 58, 58)
-                        .addComponent(jButton6)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jButton8)
+                                .addComponent(btnIdioma))
+                            .addComponent(jButton9))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(152, 152, 152)
-                                .addComponent(jButton10)
-                                .addGap(71, 71, 71))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(58, 58, 58)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jButton6)
+                                            .addComponent(jButton13)))
+                                    .addComponent(jButton14, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGap(18, 18, 18)
+                                .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(39, 39, 39)
+                                        .addComponent(jButton15)
+                                        .addGap(62, 62, 62)
+                                        .addComponent(jButton18)
+                                        .addGap(39, 39, 39)
+                                        .addComponent(jButton11))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addGap(45, 45, 45)
+                                                .addComponent(jButton7))
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addGap(40, 40, 40)
+                                                .addComponent(jButton16)))
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addGap(57, 57, 57)
+                                                .addComponent(jButton10))
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addGap(54, 54, 54)
+                                                .addComponent(jButton17))))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton7)
-                                .addGap(160, 160, 160))))))
+                                .addComponent(jButton12))))
+                    .addComponent(filler4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(filler3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -319,40 +435,62 @@ public final class MainPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        menuPrincipal();
+        menuPrincipal();//hace llamado al metodo menuprincipal cuando se le hace click al boton
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        menuPrincipal();
+        menuPrincipal();//hace llamado al metodo menuprincipal cuando se le hace click al boton
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
-        tronco_comun();
+        //este metodo se encarga de evaluar que funcion hara a travez del texto que se le imprimio con algun metodo
+        switch(jButton10.getText()){
+            case "Tronco Común":
+            case "Common Core":
+                tronco_comun(); break;
+            case "Base de Datos":
+            case "Database":
+                M.id_materia=8; ForP(U); break;
+        }
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
-        creditos();
+        creditos();//hace llamado al metodo creditos cuando se le da click al boton
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-        ajustes();
+        ajustes();//hace llamado al metodo ajustes cuando se le da click al boton
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-        mercadigital();
+        //este metodo se encarga de evaluar que funcion hara a travez del texto que se le imprimio con algun metodo
+        // Dependiendo del texto actual (ya en el idioma que corresponda)
+        String txt = jButton7.getText();
+        if(txt.equals("Mercadotecnia digital") || txt.equals("Digital Marketing")){
+            Mensaje();
+        } else if(txt.equals("PDDM") ){
+            M.id_materia=3; ForP(U);
+        } else if(txt.equals("Cálculo Integral")|| txt.equals("Integral Calculus")){
+            M.id_materia=14; ForP(U);
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-        contabilidad();
+        //este metodo se encarga de evaluar que funcion hara a travez del texto que se le imprimio con algun metodo
+        String txt = jButton6.getText();
+        if(txt.equals("Contabilidad") || txt.equals("Accounting")){
+            Mensaje();
+        } else if(txt.equals("Modelado de sistemas") || txt.equals("Systems Modeling")){
+            M.id_materia=2; ForP(U);
+        } else if(txt.equals("Orientacion Juvenil y Profecional III") || txt.equals("Professional Guidance III")){
+            M.id_materia=11; ForP(U);
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        informática();
+        informática();//hace llamado al metodo informatica cuando se le hace click al boton
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
@@ -380,13 +518,13 @@ public final class MainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if(Maximized == false){
+        //este metodo se ocupa para maximizar y minimizar la pantalla y cambiar la imagemn del boton
+         if(Maximized == false){
             setExtendedState(MAXIMIZED_BOTH);
             jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/minimize.png")));
-
             Maximized = true;
         }else{
-            this.setSize(713, 400);
+            this.setSize(800, 433);
             setLocationRelativeTo(null);
             jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/maximize.png")));
             Maximized = false;
@@ -394,30 +532,81 @@ public final class MainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        sound.stop(); sound.close();
         System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-        float vol=-22;
+        // este metodo sew ocupa para mutear el sonido si este una variable dentro del sistema de sonido se lo permite
+        float vol=-40;
         try{
             sound.mute(vol);
             if(sound.mut==false){
                 jSlider1.setValue((int)vol);
             }else if(sound.mut==true){
-                jSlider1.setValue(-50);
+                jSlider1.setValue(-80);
             }
         }catch(Exception e){
             System.out.println("error en el volumen");
         }
+        
     }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        // TODO add your handling code here:
-        //String x=jButton13.getText();
-    }//GEN-LAST:event_jButton13ActionPerformed
     
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        //este metodo se encarga de evaluar que funcion hara a travez del texto que se le imprimio con algun metodo
+         String txt = jButton13.getText();
+        if(txt.equals("Herramientas de Programación") || txt.equals("Programming Tools")){
+            M.id_materia=5; ForP(U);
+        } else if (txt.equals("Contabilidad III") || txt.equals("Accounting III")){
+            M.id_materia=12; ForP(U);
+        }
+    }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+        //este metodo se encarga de evaluar que funcion hara a travez del texto que se le imprimio con algun metodo
+        String txt = jButton14.getText();
+        if(txt.equals("Teleinformáctica") || txt.equals("Teleinformatics")){
+            M.id_materia=1; ForP(U);
+        } else if(txt.equals("Inglés V") || txt.equals("English V")){
+            M.id_materia=10; ForP(U);
+        }
+    }//GEN-LAST:event_jButton14ActionPerformed
+
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+        //este metodo se encarga de evaluar que funcion hara a travez del texto que se le imprimio con algun metodo
+         String txt = jButton15.getText();
+        if(txt.equals("Sistemas Operativos") || txt.equals("Operating Systems")){
+            M.id_materia=4; ForP(U);
+        } else if(txt.equals("Microeconomía") || txt.equals("Microeconomics")){
+            M.id_materia=13; ForP(U);
+        }
+    }//GEN-LAST:event_jButton15ActionPerformed
+
+    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+        //este metodo se encarga de evaluar que funcion hara a travez del texto que se le imprimio con algun metodo
+        String txt = jButton16.getText();
+        if(txt.equals("Interacción Usuario Computadora") || txt.equals("User-Computer Interaction")){
+            M.id_materia=6; ForP(U);
+        } else if(txt.equals("Derecho Mercantil") || txt.equals("Business Law")){
+            M.id_materia=15; ForP(U);
+        }
+    }//GEN-LAST:event_jButton16ActionPerformed
+
+    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+        //este metodo se encarga de evaluar que funcion hara a travez del texto que se le imprimio con algun metodo
+        M.id_materia=7;ForP(U);//hace llamado al metodo ForP he indica que la materia seleccionada es de id 7
+    }//GEN-LAST:event_jButton18ActionPerformed
+
+    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
+        //este metodo se encarga de evaluar que funcion hara a travez del texto que se le imprimio con algun metodo
+        M.id_materia=9;ForP(U);//hace llamado al metodo ForP he indica que la materia seleccionada es de id 9
+    }//GEN-LAST:event_jButton17ActionPerformed
+
+    private void btnIdiomaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIdiomaActionPerformed
+        Idioma.cambiarIdioma();
+    }//GEN-LAST:event_btnIdiomaActionPerformed
     private void menuPrincipal(){
+        // Mostrar/ocultar botones
         jButton5.setVisible(true);
         jButton6.setVisible(true);
         jButton7.setVisible(true);
@@ -427,8 +616,25 @@ public final class MainPage extends javax.swing.JFrame {
         jButton11.setVisible(false);
         jButton12.setVisible(false);
         jButton13.setVisible(false);
+        jButton14.setVisible(false);
+        jButton15.setVisible(false);
+        jButton16.setVisible(false);
+        jButton17.setVisible(false);
+        jButton18.setVisible(false);
         retrocesoamenu = 0;
+        
+        // Registrar las claves para este menú
+        Idioma.registrarComponente("informatica", jButton5);
+        Idioma.registrarComponente("contabilidad", jButton6);
+        Idioma.registrarComponente("mercadotecnia_digital", jButton7);
+        Idioma.registrarComponente("ajustes", jButton8);
+        Idioma.registrarComponente("creditos", jButton9);
+        Idioma.registrarComponente("tronco_comun", jButton10);
+        // jButton11 y jButton12 no se usan acá
+
+        Idioma.actualizarTextos();
     }
+    
     private void ajustes(){
         jButton5.setVisible(false);
         jButton6.setVisible(false);
@@ -439,55 +645,81 @@ public final class MainPage extends javax.swing.JFrame {
         jButton11.setVisible(false);
         jButton12.setVisible(true);
         jButton13.setVisible(false);
+        jButton14.setVisible(false);
+        jButton15.setVisible(false);
+        jButton16.setVisible(false);
+        jButton17.setVisible(false);
+        jButton18.setVisible(false);
         retrocesoamenu = 1;
+
+        // Registrar clave
+        Idioma.registrarComponente("retroceder", jButton12);
+
+        Idioma.actualizarTextos();
     }
-    private void informática(){
+
+   private void informática(){
         jButton5.setVisible(false);
-        jButton6.setVisible(false);
-        jButton7.setVisible(false);
+        jButton6.setVisible(true);
+        jButton7.setVisible(true);
+        jButton8.setVisible(false);
+        jButton9.setVisible(false);
+        jButton10.setVisible(true);
+        jButton11.setVisible(true);
+        jButton12.setVisible(false);
+        jButton13.setVisible(true);
+        jButton14.setVisible(true);
+        jButton15.setVisible(true);
+        jButton16.setVisible(true);
+        jButton17.setVisible(true);
+        jButton18.setVisible(true);
+        retrocesoamenu = 2;
+        
+        // Registrar las claves de este menú informático
+        Idioma.registrarComponente("modelado_sistemas", jButton6);
+        Idioma.registrarComponente("pddm", jButton7);
+        Idioma.registrarComponente("base_datos", jButton10);
+        Idioma.registrarComponente("menu_principal", jButton11);
+        Idioma.registrarComponente("herramientas_programacion", jButton13);
+        Idioma.registrarComponente("teleinformactica", jButton14);
+        Idioma.registrarComponente("sistemas_operativos", jButton15);
+        Idioma.registrarComponente("iu_computadora", jButton16);
+        Idioma.registrarComponente("ensamblado", jButton17);
+        Idioma.registrarComponente("poo", jButton18);
+
+        Idioma.actualizarTextos();
+    }
+   
+    private void Mensaje (){
+    JOptionPane.showMessageDialog(rootPane, Idioma.getTexto("proximamente"));
+}
+
+    private void tronco_comun(){
+        jButton5.setVisible(false);
+        jButton6.setVisible(true);
+        jButton7.setVisible(true);
         jButton8.setVisible(false);
         jButton9.setVisible(false);
         jButton10.setVisible(false);
         jButton11.setVisible(true);
         jButton12.setVisible(false);
         jButton13.setVisible(true);
-        retrocesoamenu = 2;
-    }
-    private void contabilidad (){
-        jButton5.setVisible(false);
-        jButton6.setVisible(false);
-        jButton7.setVisible(false);
-        jButton8.setVisible(false);
-        jButton9.setVisible(false);
-        jButton10.setVisible(false);
-        jButton11.setVisible(true);
-        jButton12.setVisible(false);
-        jButton13.setVisible(false);
+        jButton14.setVisible(true);
+        jButton15.setVisible(true);
+        jButton16.setVisible(true);
+        jButton17.setVisible(false);
+        jButton18.setVisible(false);
         retrocesoamenu = 3;
-    }
-    private void tronco_comun(){
-        jButton5.setVisible(false);
-        jButton6.setVisible(false);
-        jButton7.setVisible(false);
-        jButton8.setVisible(false);
-        jButton9.setVisible(false);
-        jButton10.setVisible(false);
-        jButton11.setVisible(true);
-        jButton12.setVisible(false);
-        jButton13.setVisible(false);
-        retrocesoamenu = 4;
-    }
-    private void mercadigital(){
-        jButton5.setVisible(false);
-        jButton6.setVisible(false);
-        jButton7.setVisible(false);
-        jButton8.setVisible(false);
-        jButton9.setVisible(false);
-        jButton10.setVisible(false);
-        jButton11.setVisible(true);
-        jButton12.setVisible(false);
-        jButton13.setVisible(false);
-        retrocesoamenu = 5;
+
+        Idioma.registrarComponente("orientacion_juv_prof", jButton6);
+        Idioma.registrarComponente("calculo_integral", jButton7);
+        Idioma.registrarComponente("menu_principal", jButton11);
+        Idioma.registrarComponente("contabilidad_iii", jButton13);
+        Idioma.registrarComponente("inglés_v", jButton14);
+        Idioma.registrarComponente("microeconomia", jButton15);
+        Idioma.registrarComponente("derecho_mercantil", jButton16);
+
+        Idioma.actualizarTextos();
     }
     private void creditos(){
         jButton5.setVisible(false);
@@ -499,47 +731,69 @@ public final class MainPage extends javax.swing.JFrame {
         jButton11.setVisible(false);
         jButton12.setVisible(true);
         jButton13.setVisible(false);
-        retrocesoamenu = 5;
+        jButton14.setVisible(false);
+        jButton15.setVisible(false);
+        jButton16.setVisible(false);
+        jButton17.setVisible(false);
+        jButton18.setVisible(false);
+        retrocesoamenu = 4;
+
+        Idioma.registrarComponente("retroceder", jButton12);
+
+        Idioma.actualizarTextos();
+    }
+     public void ForP(Usuario Us){
+        Formulario FP=new Formulario(U);//hace llamado de la clase
+        FP.setVisible(true);//hace visible la clase
+        sound.stop(); sound.close();//quita la musica
+        dispose();//cierra la pantalla actual
     }
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+    /* Set the Nimbus look and feel */
+    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+     * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+     */
+    try {
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            if ("Nimbus".equals(info.getName())) {
+                javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                break;
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        new MainPage().setVisible(true);
-        try{
-            Thread.sleep(8000);
-            //sound.setfile(file);
-        }catch(Exception e){
-            System.out.println("Error al buscar cargar musica");
-        }
+    } catch (ClassNotFoundException ex) {
+        java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (InstantiationException ex) {
+        java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (IllegalAccessException ex) {
+        java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     }
-
+    //</editor-fold>
+    
+    Usuario u = new Usuario();
+    java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            new MainPage(u).setVisible(true);
+        }
+    });
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnIdioma;
+    private javax.swing.Box.Filler filler2;
+    private javax.swing.Box.Filler filler3;
+    private javax.swing.Box.Filler filler4;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
+    private javax.swing.JButton jButton17;
+    private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -548,9 +802,19 @@ public final class MainPage extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     public javax.swing.JSlider jSlider1;
     // End of variables declaration//GEN-END:variables
-    
+    class FondoPanel extends JPanel{//crea una clase que hereda los atributos de la clase JPanel
+        private Image imagen;//crea una variable de la clase imagen
+        @Override
+        public void paint(Graphics g) {//este metodo se encargara de indicar que imagen se imprimira y el tamaño que debe tener
+            imagen = new ImageIcon(getClass().getResource("/Imagenes/Fondito.jpg")).getImage();            
+            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);            
+            setOpaque(false);
+            super.paint(g);
+        }
+    }
 }
