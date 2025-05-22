@@ -16,6 +16,12 @@ import java.util.Properties;
 public class Usuario {//clase para guardar los datos y atributos del usuario
         public String nombre="Invitado"; 
         public int pts=0, vida, calif_gen;
+        private String propertiesFilename = "usuario.properties"; // Default filename
+
+        public void setPropertiesFilename(String filename) {
+            this.propertiesFilename = filename;
+        }
+
         public void sumar_pts(int newpts, int ptsa){
             pts=newpts+ptsa;
         }
@@ -23,7 +29,7 @@ public class Usuario {//clase para guardar los datos y atributos del usuario
             Properties properties = new Properties();
             properties.setProperty("nombre", this.nombre);
             properties.setProperty("pts", String.valueOf(this.pts));
-            try (FileOutputStream out = new FileOutputStream("usuario.properties")) {
+            try (FileOutputStream out = new FileOutputStream(this.propertiesFilename)) { // Use the field here
                 properties.store(out, "User Data");
             } catch (IOException e) {
                 e.printStackTrace(); // Or a more sophisticated error handling
@@ -32,7 +38,7 @@ public class Usuario {//clase para guardar los datos y atributos del usuario
         
         public void cargar_datos(){
             Properties properties = new Properties();
-            try (FileInputStream in = new FileInputStream("usuario.properties")) {
+            try (FileInputStream in = new FileInputStream(this.propertiesFilename)) { // Use the field here
                 properties.load(in);
                 this.nombre = properties.getProperty("nombre", "Invitado");
                 this.pts = Integer.parseInt(properties.getProperty("pts", "0"));
@@ -41,6 +47,7 @@ public class Usuario {//clase para guardar los datos y atributos del usuario
                 System.out.println("No user data file found or error loading: " + e.getMessage());
                 this.nombre = "Invitado"; // Ensure defaults
                 this.pts = 0;
+                // Ensure guardar_datos() is not called here to allow testing file not found scenario
             } catch (NumberFormatException e) {
                 System.out.println("Error parsing points: " + e.getMessage());
                 this.pts = 0; // Default to 0 if parsing fails
