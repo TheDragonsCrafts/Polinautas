@@ -4,6 +4,7 @@
  */
 package Formularios;
 
+import data.UserRepository;
 import java.awt.Point;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -19,11 +20,16 @@ public class initUser extends javax.swing.JFrame {
      */
     public Usuario Us;
     private Point point;
+    private UserRepository userRepository; // Added
     int retrocesoamenu = 0;
     Boolean Maximized = false;
     public initUser(Usuario U) {
         this.Us=U;
-        Us.cargar_datos();
+        this.userRepository = new UserRepository(); // Added
+        // Us.cargar_datos(); // Old line
+        Usuario loadedUser = userRepository.loadUsuario(); // New
+        this.Us.nombre = loadedUser.nombre; // New
+        this.Us.pts = loadedUser.pts; // New
         setUndecorated(true);
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/Icon.jfif")).getImage());
@@ -303,7 +309,7 @@ public class initUser extends javax.swing.JFrame {
         String username = etxtname.getText();
         if (!username.isEmpty()) {
             Us.cambiar_nom(username);
-            Us.guardar_datos(); // Assuming this method exists in Usuario class
+            userRepository.saveUsuario(Us); // Replaced Us.guardar_datos();
             new MainPage(Us).setVisible(true);
             dispose();
         } else {
@@ -326,42 +332,65 @@ public class initUser extends javax.swing.JFrame {
         etxtemail.setText("");
         etxtemail.setText("");
     }
+
+    /**
+     * Configures the UI for the initial menu view.
+     * Shows options to "Iniciar Sesión" (Login) or "Registrarse" (Register).
+     * Hides input fields and confirmation buttons.
+     */
     public void menu(){
+        // Show initial action buttons
         btnIS.setVisible(true);
         btnReg.setVisible(true);
-        btnCon.setVisible(false);
-        btnCon1.setVisible(false);
+        
+        // Hide confirmation/action buttons for specific forms
+        btnCon.setVisible(false);  // Register confirm button
+        btnCon1.setVisible(false); // Login confirm button (initially)
+        
+        // Set initial welcome/instruction text
         txt1.setVisible(true);
-        etxtemail.setVisible(false);
+        txt1.setText("Inicie sesión para poder jugar"); // Default text
+        
+        // Hide all input fields and their labels
         etxtname.setVisible(false);
-        etxtPass.setVisible(false);
         txtname.setVisible(false);
+        etxtemail.setVisible(false);
         txtemail.setVisible(false);
+        etxtPass.setVisible(false);
         txtPass.setVisible(false);
-        // Ensure btnCon1 is also initially hidden
-        btnCon1.setVisible(false);
     }
+
+    /**
+     * Configures the UI for the login screen.
+     * Shows username input field and a "Login" button.
+     * Hides registration-specific fields and initial menu buttons.
+     */
     public void setupLoginScreen(){
-        txt1.setText("Enter your username"); // Or hide: txt1.setVisible(false);
+        // Update instruction text for login
+        txt1.setText("Enter your username"); 
+        txt1.setVisible(true); 
+
+        // Show username field and its label
         etxtname.setVisible(true);
         txtname.setVisible(true);
-        txtname.setText("Usuario:"); // Or "Nombre:"
+        txtname.setText("Usuario:"); 
 
-        // Hide email and password fields
+        // Ensure email and password fields (used for registration) are hidden
         etxtemail.setVisible(false);
         txtemail.setVisible(false);
         etxtPass.setVisible(false);
         txtPass.setVisible(false);
 
-        // Repurpose btnCon1 as the login button
-        btnCon1.setText("Login"); // Or "Entrar"
+        // Configure and show the login confirmation button
+        btnCon1.setText("Login"); 
         btnCon1.setVisible(true);
 
-        // Hide initial buttons
+        // Hide initial menu buttons and registration confirm button
         btnIS.setVisible(false);
         btnReg.setVisible(false);
-        btnCon.setVisible(false); // Also hide registration confirm button
+        btnCon.setVisible(false); 
     }
+
     /**
      * @param args the command line arguments
      */
