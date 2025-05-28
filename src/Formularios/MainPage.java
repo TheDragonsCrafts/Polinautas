@@ -479,48 +479,54 @@ public final class MainPage extends javax.swing.JFrame {
         }
     }
 
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+public static void main(String args[]) {
+    /* Set the Nimbus look and feel */
+    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+     * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+     */
+    try {
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            if ("Nimbus".equals(info.getName())) {
+                javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                break;
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        
-        Usuario u; // Declare Usuario object
-        // Attempt to load user data using UserRepository.
-        // If loading fails (e.g., file not found, corrupt data),
-        // a default Usuario object will be used.
-        try {
-            data.UserRepository userRepository = new data.UserRepository();
-            u = userRepository.loadUsuario();
-        } catch (Exception e) { // Catch a broader range of exceptions for robustness
-            System.err.println("Error loading user data for MainPage main: " + e.getMessage());
-            u = new Usuario(); // Fallback to default user if loading fails
-        }
-
-        // 'finalUser' is used in the lambda. This variable captures the state of 'u'
-        // after attempting to load data, ensuring the correct Usuario object is passed
-        // to the MainPage constructor. This is necessary because variables used in
-        // lambdas must be final or effectively final.
-        final Usuario finalUser = u;
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainPage(finalUser).setVisible(true);
-            }
-        });
+    } catch (ClassNotFoundException ex) {
+        java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (InstantiationException ex) {
+        java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (IllegalAccessException ex) {
+        java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     }
+    //</editor-fold>
+
+    Usuario u; // Declare Usuario object
+    // Attempt to load user data using UserRepository.
+    // If loading fails (e.g., file not found, corrupt data),
+    // a default Usuario object will be used.
+    try {
+        data.UserRepository userRepository = new data.UserRepository();
+        u = userRepository.loadUsuario();
+    } catch (Exception e) { // Catch a broader range of exceptions for robustness
+        System.err.println("Error loading user data for MainPage main: " + e.getMessage());
+        u = new Usuario(); // Fallback to default user if loading fails
+    }
+
+    // 'finalUser' is used in the lambda. This variable captures the state of 'u'
+    // after attempting to load data, ensuring the correct Usuario object is passed
+    // to the MainPage constructor. This is necessary because variables used in
+    // lambdas must be final or effectively final.
+    final Usuario finalUser = u;
+
+    java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            new MainPage(finalUser).setVisible(true);
+        }
+    });
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIdioma;
     private javax.swing.JButton jButton1;
