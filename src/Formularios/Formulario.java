@@ -4,6 +4,7 @@
  */
 package Formularios;
 
+import data.UserRepository; // Added import
 import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.FlowLayout; // Added import
@@ -15,61 +16,175 @@ import javax.swing.JLabel; // Added import
 import javax.swing.JOptionPane; // Added import
 import laberintos.LaberintoPanel;
 import laberintos.MazeListener; // Added import
+import Materias.Materias; // Added for Materias class
+import javax.swing.BoxLayout; // Added for BoxLayout
+import javax.swing.JRadioButton; // Added for JRadioButton
+import javax.swing.ButtonGroup; // Added for ButtonGroup
+
 
 public class Formulario extends javax.swing.JFrame implements MazeListener { // Implemented MazeListener
     //variables
     private Point point;
-    private JLabel questionLabel; // Added field
-    private JButton answerButton; // Added field
-    int retrocesoamenu = 0;
-    private Usuario Us;//se crea un objeto de la clase Usuario
-    LaberintoPanel labP;//se crea un objeto de la clase LaberintoPanel
-    MainSound sound = new MainSound();//se hace llamado al sistema de sonido
+    // private JLabel questionLabel; // Will be created in loadQuestion
+    // private JButton answerButton; // Will be created in loadQuestion
+    // int retrocesoamenu = 0; // Seems unused
+    private Usuario Us;
+    private UserRepository userRepository;
+    private Materias materias; 
+    private int currentMateriaId; 
+    private int currentQuestionIndex = 0; 
+    private JRadioButton[] answerRadioButtons; // Field to hold radio buttons
+
+    LaberintoPanel labP;
+    MainSound sound = new MainSound();
     Boolean Maximized = false;
     int cancion=2;
-    public Formulario(Usuario U) {
-        this.Us=U;//para mantener los datos seleccionados del panel anterior se iguala la variable del panel pasado 
-        //con la variable usuario de este panel
+
+    // Updated Constructor
+    public Formulario(Usuario U, Materias materias, int id_materia) {
+        this.Us = U;
+        this.materias = materias;
+        this.currentMateriaId = id_materia;
+        this.userRepository = new UserRepository(); 
+        
         setUndecorated(true);
         initComponents();
         cargar_laberinto();
-        jLabel1.setText("pts: "+Us.pts);
-        setIconImage(new ImageIcon(getClass().getResource("/imagenes/Icon.jfif")).getImage());//imprime una imagen en el icono del programa
-        setTitle("Prueba del Conocimiento");
+        jLabel1.setText("pts: "+Us.pts); // Display initial points
+        setIconImage(new ImageIcon(getClass().getResource("/imagenes/Icon.jfif")).getImage());
+        setTitle("Prueba del Conocimiento: " + this.materias.getNombreMateria(this.currentMateriaId));
         setLocationRelativeTo(null);
         setResizable(false);
-        jSlider1.addChangeListener(e -> {//metodo utilizado para calcular el volumen deseado
+        jSlider1.addChangeListener(e -> {
             float vol=jSlider1.getValue();
             sound.setVolumen(vol);
         });
-        //sound.identificarCancion(cancion);//identidica que cancion se quiere usar atraves del valor de la variable cancion
 
-        // --- JintFrame2 modification START ---
+        loadQuestion(currentQuestionIndex); // Load the first question
+    }
+
+    private void loadQuestion(int questionIndex) {
         JintFrame2.getContentPane().removeAll();
-        JintFrame2.getContentPane().setLayout(new FlowLayout());
+        JintFrame2.getContentPane().setLayout(new BoxLayout(JintFrame2.getContentPane(), BoxLayout.Y_AXIS));
 
-        questionLabel = new JLabel("What is the capital of France?");
-        JintFrame2.getContentPane().add(questionLabel);
+        String subjectName = materias.getNombreMateria(currentMateriaId);
+        String questionText = materias.reg_M(currentMateriaId, questionIndex);
+        
+        // Create and add question panel first, as it also handles "Question not found"
+        JPanel questionPanel = createQuestionPanel(subjectName, questionText);
+        JintFrame2.getContentPane().add(questionPanel);
 
-        answerButton = new JButton("Paris");
-        answerButton.addActionListener(new ActionListener() {
+        // Early exit if question text itself indicates an issue (handled in createQuestionPanel's display logic)
+        if (questionText == null || questionText.equals("Question not found") || questionText.isEmpty()) {
+            JintFrame2.revalidate();
+            JintFrame2.repaint();
+            return;
+        }
+
+        // Now fetch answers and points, only if question is valid
+        String[] answers = materias.reg_R(currentMateriaId, questionIndex); // answers[0] is the correct one
+        final int points = materias.reg_Pts(currentMateriaId, questionIndex);
+
+        if (answers == null || answers.length == 0) {
+            JLabel noAnswersLabel = new JLabel("No answers available for this question.");
+            JintFrame2.getContentPane().add(noAnswersLabel);
+        } else {
+            // If answers are present, even if less than 4, proceed.
+            // Log a warning if answer count is unusual but not 0.
+            if (answers.length < 4 && answers.length > 0) {
+                 System.err.println("Warning: Incomplete answer set for question '" + questionText + "' (" + answers.length + " answers provided). Displaying available answers.");
+            }
+
+            JPanel answersPanel = createAnswersPanel(answers);
+            JintFrame2.getContentPane().add(answersPanel);
+
+            // The first answer is always considered the correct one by design of reg_R
+            JButton submitButton = createSubmitButton(answers[0], points);
+            JintFrame2.getContentPane().add(submitButton);
+        }
+
+        JintFrame2.revalidate();
+        JintFrame2.repaint();
+    }
+
+    private JPanel createQuestionPanel(String subjectName, String questionText) {
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JLabel questionLabelDisplay = new JLabel();
+        if (questionText != null && !questionText.equals("Question not found") && !questionText.isEmpty()) {
+            questionLabelDisplay.setText("<html><body style='width: 250px'>" + subjectName + ":<br>" + questionText + "</body></html>");
+        } else {
+            questionLabelDisplay.setText("<html><body style='width: 250px'>No question available for " + subjectName + " (Q:" + currentQuestionIndex + ").</body></html>");
+        }
+        panel.add(questionLabelDisplay);
+        return panel;
+    }
+
+    private JPanel createAnswersPanel(String[] allAnswers) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        // Size answerRadioButtons based on the actual number of answers provided
+        answerRadioButtons = new JRadioButton[allAnswers.length]; 
+        ButtonGroup answerGroup = new ButtonGroup();
+            
+        for (int i = 0; i < allAnswers.length; i++) {
+            // Guard against unexpectedly null answer strings within the array, though ideally reg_R ensures this.
+            String answerText = allAnswers[i] != null ? allAnswers[i] : "Error: Null answer option";
+            answerRadioButtons[i] = new JRadioButton(answerText);
+            answerGroup.add(answerRadioButtons[i]);
+            panel.add(answerRadioButtons[i]);
+        }
+        return panel;
+    }
+
+    private JButton createSubmitButton(final String correctAnswer, final int points) {
+        JButton submitButton = new JButton("Submit Answer");
+        submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (Us != null) {
-                    int pointsToAward = 50; // Example points
-                    Us.pts += pointsToAward;
-                    Us.guardar_datos();
-                    jLabel1.setText("pts: " + Us.pts); // jLabel1 is the points display on the main Formulario frame
-                    JOptionPane.showMessageDialog(Formulario.this, "Correct! You earned " + pointsToAward + " points.", "Question Answered", JOptionPane.INFORMATION_MESSAGE);
-                    answerButton.setEnabled(false); // Disable button after answering
+                String selectedAnswerText = null;
+                // Check if answerRadioButtons has been initialized and is not empty
+                if (answerRadioButtons == null || answerRadioButtons.length == 0) {
+                     JOptionPane.showMessageDialog(Formulario.this, "No answers were loaded to select from.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; 
+                }
+
+                for(JRadioButton rb : answerRadioButtons) {
+                    if (rb.isSelected()) {
+                        selectedAnswerText = rb.getText();
+                        break;
+                    }
+                }
+
+                if (selectedAnswerText != null) {
+                    if (selectedAnswerText.equals(correctAnswer)) {
+                        Us.pts += points;
+                        userRepository.saveUsuario(Us);
+                        jLabel1.setText("pts: " + Us.pts);
+                        JOptionPane.showMessageDialog(Formulario.this, "Correct! You earned " + points + " points.", "Question Answered", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(Formulario.this, "Incorrect. The correct answer was: " + correctAnswer, "Question Answered", JOptionPane.ERROR_MESSAGE);
+                    }
+                    
+                    for(JRadioButton rb : answerRadioButtons) rb.setEnabled(false);
+                    submitButton.setEnabled(false); // Disable this button
+                    
+                    // Optional: Logic to load next question or finish
+                    // currentQuestionIndex++;
+                    // String nextQuestion = materias.reg_M(currentMateriaId, currentQuestionIndex);
+                    // if (nextQuestion != null && !nextQuestion.equals("Question not found") && !nextQuestion.isEmpty()) {
+                    //     loadQuestion(currentQuestionIndex);
+                    // } else {
+                    //     JOptionPane.showMessageDialog(Formulario.this, "No more questions for this subject!", "End of Subject", JOptionPane.INFORMATION_MESSAGE);
+                    // }
+
+                } else {
+                    JOptionPane.showMessageDialog(Formulario.this, "Please select an answer.", "No Answer Selected", JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
-        JintFrame2.getContentPane().add(answerButton);
-        JintFrame2.revalidate();
-        JintFrame2.repaint();
-        // --- JintFrame2 modification END ---
+        return submitButton;
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -367,7 +482,7 @@ public class Formulario extends javax.swing.JFrame implements MazeListener { // 
     public void mazeCompleted(int points) {
         if (Us != null) { // Check if Us (Usuario object) exists
             Us.pts += points; // Directly add points
-            Us.guardar_datos();
+            userRepository.saveUsuario(Us); // Replaced Us.guardar_datos()
             jLabel1.setText("pts: " + Us.pts);
             JOptionPane.showMessageDialog(this, "Maze Cleared! You earned " + points + " points.", "Success", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -424,13 +539,12 @@ public class Formulario extends javax.swing.JFrame implements MazeListener { // 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JInternalFrame JintFrame1;
     private javax.swing.JInternalFrame JintFrame2;
-    // private javax.swing.JLabel jLabel2; // Commented out as it's replaced
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
-    // jLabel2 is effectively removed by getContentPane().removeAll()
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JProgressBar jProgressBar1;
