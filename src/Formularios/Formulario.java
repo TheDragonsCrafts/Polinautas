@@ -20,6 +20,7 @@ import Materias.Materias; // Added for Materias class
 import javax.swing.BoxLayout; // Added for BoxLayout
 import javax.swing.JRadioButton; // Added for JRadioButton
 import javax.swing.ButtonGroup; // Added for ButtonGroup
+import javax.swing.JPanel; // Needed for custom panels
 
 
 public class Formulario extends javax.swing.JFrame implements MazeListener { // Implemented MazeListener
@@ -528,9 +529,11 @@ public class Formulario extends javax.swing.JFrame implements MazeListener { // 
     //</editor-fold>
     
     Usuario U=new Usuario();
+    Materias materias = new Materias();
     java.awt.EventQueue.invokeLater(new Runnable() {
         public void run() {
-            new Formulario(U).setVisible(true);
+            // Start with subject ID 1 by default
+            new Formulario(U, materias, 1).setVisible(true);
         }
     });
 }

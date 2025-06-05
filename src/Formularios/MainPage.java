@@ -1,19 +1,16 @@
 package Formularios;
 
-import Materias.Materias;
-import java.awt.Point;
-import javax.swing.ImageIcon;
+import java.awt.BorderLayout; // Added for BorderLayout
+import java.awt.CardLayout;  // Added for CardLayout
 import java.awt.Graphics;
 import java.awt.Image;
-import Materias.Materias;
 import java.awt.Point;
+
 import javax.swing.ImageIcon;
-import java.awt.Graphics;
-import java.awt.Image;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import java.awt.CardLayout; // Added for CardLayout
-import java.awt.BorderLayout; // Added for BorderLayout
+
+import Materias.Materias;
 
 public final class MainPage extends javax.swing.JFrame {
     //variables iniciales
@@ -505,11 +502,11 @@ public final class MainPage extends javax.swing.JFrame {
         } catch (NoClassDefFoundError e) {
             System.err.println("UserRepository not available for main method test, using default user. " + e.getMessage());
         }
-
+        final Usuario user = u;
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainPage(u).setVisible(true);
+                new MainPage(user).setVisible(true);
             }
         });
     }
